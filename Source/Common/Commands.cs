@@ -19,6 +19,6 @@ namespace Multiplayer.Common
         MapTimeSpeed,
         CreateMapFactionData,
         MapIdBlock,
-        Designator,
+        Designator
     }
 }

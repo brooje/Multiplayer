@@ -277,6 +277,7 @@ namespace Multiplayer.Client
                     data.Log.current.text = handler.ToString();
                 }
 
+
                 if (cmdType == CommandType.DebugTools)
                 {
                     MpDebugTools.HandleCmd(data);

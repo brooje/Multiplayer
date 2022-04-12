@@ -1,3 +1,4 @@
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,18 +125,19 @@ namespace Multiplayer.Common
         public void SendWorldData()
         {
             connection.Send(Packets.Server_WorldDataStart);
-
+            /*
             int factionId = MultiplayerServer.instance.coopFactionId;
             MultiplayerServer.instance.playerFactions[connection.username] = factionId;
-
-            /*if (!MultiplayerServer.instance.playerFactions.TryGetValue(connection.Username, out int factionId))
+            */
+            
+            if (!MultiplayerServer.instance.playerFactions.TryGetValue(connection.username, out int factionId))
             {
                 factionId = MultiplayerServer.instance.nextUniqueId++;
-                MultiplayerServer.instance.playerFactions[connection.Username] = factionId;
+                MultiplayerServer.instance.playerFactions[connection.username] = factionId;
 
                 byte[] extra = ByteWriter.GetBytes(factionId);
-                MultiplayerServer.instance.SendCommand(CommandType.SETUP_FACTION, ScheduledCommand.NoFaction, ScheduledCommand.Global, extra);
-            }*/
+                MultiplayerServer.instance.commands.Send(CommandType.SetupFaction, ScheduledCommand.NoFaction, ScheduledCommand.Global, extra);
+            }
 
             if (Server.PlayingPlayers.Count(p => p.FactionId == factionId) == 1)
             {

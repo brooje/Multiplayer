@@ -10,6 +10,7 @@ using System.Xml;
 using Multiplayer.Client.Util;
 using Verse;
 using Verse.Profile;
+using RimWorld;
 
 namespace Multiplayer.Client
 {
@@ -258,8 +259,8 @@ namespace Multiplayer.Client
             if (factionData is { online: true })
                 Multiplayer.RealPlayerFaction = Find.FactionManager.GetById(factionData.factionId);
             else
-                //Multiplayer.RealPlayerFaction = Multiplayer.DummyFaction;
-                throw new Exception("Currently not supported");
+                // Multiplayer.RealPlayerFaction = Multiplayer.DummyFaction;
+                throw new Exception("Currently not supported: " + factionData);
 
             // todo find a better way
             Multiplayer.game.myFactionLoading = null;
@@ -269,6 +270,9 @@ namespace Multiplayer.Client
 
             Multiplayer.WorldComp.cmds = new Queue<ScheduledCommand>(Multiplayer.session.dataSnapshot.mapCmds.GetValueSafe(ScheduledCommand.Global) ?? new List<ScheduledCommand>());
             // Map cmds are added in MapAsyncTimeComp.FinalizeInit
+            List<Page> configPages = new List<Page> { new Page_SelectStartingSite()};
+            configPages.AddRange(Find.Scenario.parts.SelectMany((ScenPart p) => p.GetConfigPages()));
+            Find.WindowStack.Add(PageUtility.StitchedPages(configPages));
         }
     }
 

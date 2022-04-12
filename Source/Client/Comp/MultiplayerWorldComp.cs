@@ -311,6 +311,8 @@ namespace Multiplayer.Client
                     LongEventHandler.QueueLongEvent(CreateJoinPoint, "MpCreatingJoinPoint", false, null);
                 }
 
+
+
                 if (cmdType == CommandType.InitPlayerData)
                 {
                     var playerId = data.ReadInt32();
@@ -362,9 +364,9 @@ namespace Multiplayer.Client
                     loadID = factionId,
                     def = FactionDefOf.PlayerColony,
                     Name = "Multiplayer faction",
-                    centralMelanin = Rand.Value
+                    centralMelanin = Rand.Value,
                 };
-
+                
                 Find.FactionManager.Add(faction);
 
                 foreach (Faction current in Find.FactionManager.AllFactionsListForReading)
@@ -374,6 +376,9 @@ namespace Multiplayer.Client
                 }
 
                 Multiplayer.WorldComp.factionData[factionId] = FactionWorldData.New(factionId);
+                Multiplayer.WorldComp.factionData[factionId].online = true;
+
+
 
                 MpLog.Log($"New faction {faction.GetUniqueLoadID()}");
             }

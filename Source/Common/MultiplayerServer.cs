@@ -55,7 +55,7 @@ namespace Multiplayer.Common
 
         private Dictionary<string, ChatCmdHandler> chatCmds = new();
 
-        public int nextUniqueId; // currently unused
+        public int nextUniqueId = 30000;
 
         public string rwVersion;
         public string mpVersion;
